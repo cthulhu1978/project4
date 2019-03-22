@@ -7,7 +7,7 @@ void main(int argc, char **argv)
     int i, rc;
     int stdin_pipe_fds[2], stdout_pipe_fds[2], stderr_pipe_fds[2];
     char buf[100];
-    
+      // read and write file descriptors are passed to pipe.
     pipe(stdin_pipe_fds);
     pipe(stdout_pipe_fds);
     pipe(stderr_pipe_fds);

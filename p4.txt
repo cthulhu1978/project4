@@ -7,10 +7,12 @@
 turnin code:  cs_p4
 
 
-Write a program that forks one process.  Have the new process execve the
-program named /usr/bin/sort.  Use dup/dup2 and a pipe to establish a way
-for the original process to pass stdin to sort.  The sort program will
-simply print to stdout.
+Write a program that forks one process.
+
+Have the new process execve the program named /usr/bin/sort.
+
+Use dup/dup2 and a pipe to establish a way for the original process to pass stdin to sort.
+The sort program will simply print to stdout.
 
 BE SURE TO HAVE THIS AS THE FIRST EXECUTABLE LINE IN *BOTH* PROCESSES:
 
