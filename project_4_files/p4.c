@@ -23,7 +23,14 @@ int main(int argc, char *argv[]) {
     close(sortPipe[WRITE]);
     close(sortPipe[READ]);
     // execute some code and exit
-    char * args[] = {"/usr/bin/sort", NULL };
+    printf("args listed out %d\n",argc );
+    char * args[argc + 1];
+    args[0] = "/usr/bin/sort";
+    for (size_t i = 1; i <= argc; i++) {
+      args[i] = argv[i];
+    }
+    args[argc+1] = NULL;
+    //args = {"/usr/bin/sort", "-r",NULL };
     execve(args[0], args, NULL);
   }
 
