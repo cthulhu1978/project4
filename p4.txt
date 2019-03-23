@@ -19,7 +19,10 @@ BE SURE TO HAVE THIS AS THE FIRST EXECUTABLE LINE IN *BOTH* PROCESSES:
     alarm(60)
 
 The original process should read lines of input from a file named as the
-first command-line arg.  Discard any lines that contain the word foobar
+first command-line arg.
+
+**Discard any lines that contain the word foobar
+
 in lower-case.  All other lines should be passed to sort via the pipe.
 
 Command-line args after the filename should be handed to sort as if they
