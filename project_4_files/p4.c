@@ -23,35 +23,38 @@ int main(int argc, char *argv[]) {
     close(sortPipe[WRITE]);
     close(sortPipe[READ]);
     // execute some code and exit
-    printf("args listed out %d\n",argc );
-    char * args[argc + 1];
-    args[0] = "/usr/bin/sort";
-    for (size_t i = 1; i <= argc; i++) {
-      args[i] = argv[i];
-    }
-    args[argc+1] = NULL;
-    //args = {"/usr/bin/sort", "-r",NULL };
+    //printf("args listed out %d\n",argc );
+
+    // create array, set first element, add additional options, add Null at end
+    //char * args[argc + 1];
+    // args[0] = "/usr/bin/sort";
+    // for (size_t i = 1; i <= argc; i++) { args[i] = argv[i]; }
+    // args[argc+1] = NULL;
+
+    char * args[] = {"/usr/bin/sort", "-r", NULL };
     execve(args[0], args, NULL);
   }
 
   //////////////// PARENT PROCESS /////////////////
+  if(pid > 0){
   // unused by parent
-  close(sortPipe[READ]);
-
-  if(argc > 1){
+    close(sortPipe[READ]);
     char * fileName = argv[1];
     FILE* file = fopen(fileName, "r");
     char line[256];
+
+    const char * word = "foobar";
     while (fgets(line, sizeof(line), file)) {
-      // TODO  check for foobar in each line. then pass to sort
-      dprintf(sortPipe[1],"%s \n" , line);
+        char * ret = (strstr(line, word));
+        if(ret == NULL){
+        dprintf(sortPipe[1],"%s \n" , line);
+        }
     }
-  }
 
-  close(sortPipe[WRITE]);
-  int status;
-  pid_t wpid = waitpid(pid, &status, 0); // wait for child to finish before exiting
-  return wpid == pid && WIFEXITED(status) ? WEXITSTATUS(status) : -1;
-
+    close(sortPipe[WRITE]);
+    int status;
+    pid_t wpid = waitpid(pid, &status, 0); // wait for child to finish before exiting
+    return wpid == pid && WIFEXITED(status) ? WEXITSTATUS(status) : -1;
+}
   return 0;
 }
